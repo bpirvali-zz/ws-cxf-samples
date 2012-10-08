@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<application xmlns="http://wadl.dev.java.net/2009/02"
+	xmlns:xs="http://www.w3.org/2001/XMLSchema">
+	<grammars>
+		<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema"
+			xmlns:tns="http://bp.com/bs" attributeFormDefault="unqualified"
+			elementFormDefault="qualified" targetNamespace="http://bp.com/bs">
+			<xs:element name="book">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="isbn" type="xs:string" />
+						<xs:element name="title" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="books">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="book"
+							nillable="true">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="isbn" type="xs:string" />
+									<xs:element name="title" type="xs:string" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="review">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="by" type="xs:string" />
+						<xs:element name="text" type="xs:string" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reviewRef">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="summary" type="xs:string" />
+						<xs:element name="url" type="xs:anyURI" />
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="reviews">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element maxOccurs="unbounded" minOccurs="0" name="reviewRef"
+							nillable="true">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="summary" type="xs:string" />
+									<xs:element name="url" type="xs:anyURI" />
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:complexType name="reviewsResource">
+				<xs:sequence />
+			</xs:complexType>
+		</xs:schema>
+	</grammars>
+	<resources base="http://localhost:8080/bs/rest/">
+		<resource path="/books/{isbn}">
+			<param name="isbn" style="template" type="xs:string" />
+			<method name="DELETE">
+				<request></request>
+				<response>
+					<representation mediaType="application/octet-stream" />
+				</response>
+			</method>
+			<method name="GET">
+				<request></request>
+				<response>
+					<representation mediaType="application/octet-stream" />
+				</response>
+			</method>
+			<method name="PUT">
+				<request>
+					<representation mediaType="application/octet-stream" />
+				</request>
+				<response>
+					<representation mediaType="application/octet-stream" />
+				</response>
+			</method>
+			<resource path="/reviews">
+				<param name="isbn" style="template" type="xs:string" />
+				<method name="GET">
+					<request></request>
+					<response>
+						<representation mediaType="application/octet-stream" />
+					</response>
+				</method>
+				<resource path="/{index}">
+					<param name="index" style="template" type="xs:int" />
+					<method name="GET">
+						<request></request>
+						<response>
+							<representation mediaType="application/octet-stream" />
+						</response>
+					</method>
+				</resource>
+			</resource>
+		</resource>
+		<resource path="/books">
+			<method name="POST">
+				<request>
+					<representation mediaType="application/octet-stream" />
+				</request>
+				<response>
+					<representation mediaType="application/octet-stream" />
+				</response>
+			</method>
+		</resource>
+		<resource path="/bookselections">
+			<method name="GET">
+				<request>
+					<param name="keyword" style="query" type="xs:string" />
+					<param name="pubdate" style="query" type="xs:string" />
+				</request>
+				<response>
+					<representation mediaType="application/octet-stream" />
+				</response>
+			</method>
+		</resource>
+	</resources>
+</application>

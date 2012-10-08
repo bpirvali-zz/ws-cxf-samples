@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:jaxrs="http://cxf.apache.org/jaxrs"
+    xmlns:context="http://www.springframework.org/schema/context"
+	xsi:schemaLocation="
+http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+http://cxf.apache.org/jaxrs http://cxf.apache.org/schemas/jaxrs.xsd
+http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd">
+		
+	<context:component-scan base-package="com.bp.bs"/>
+    <jaxrs:server id="restContainer" address="/">
+        <jaxrs:serviceBeans>
+            <ref bean="bookResource"/>
+            <ref bean="booksResource"/>
+            <ref bean="bookSelectionsResource"/>
+        </jaxrs:serviceBeans>
+    </jaxrs:server>
+	
+	<!--  
+	<bean id="bs" class="com.bp.bs.BooksService"/>
+	<bean id="r1" class="com.bp.bs.BookResource">
+	   <property name="bs" ref="bs" /> 
+	</bean>
+	<bean id="r3" class="com.bp.bs.BooksResource"/>
+	<bean id="bsr" class="com.bp.bs.BookSelectionsResource"/>
+	<jaxws:server id="s1">
+		<jaxws:serviceBean>
+			<ref bean="r1" />
+		</jaxws:serviceBean>
+	</jaxws:server>
+	--> 
+</beans>
+
+

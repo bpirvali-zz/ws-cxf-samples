@@ -26,8 +26,8 @@ public class BookResourceImplSpringTests extends AbstractTestNGSpringContextTest
 	@Autowired
 	private WebClient client;
 	
-	@Autowired
-	private Config cfg;
+	//@Autowired
+	//private Config cfg;
 	
 	
 	@BeforeMethod

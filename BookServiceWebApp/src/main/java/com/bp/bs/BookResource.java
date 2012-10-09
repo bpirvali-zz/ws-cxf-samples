@@ -24,12 +24,13 @@ public interface BookResource {
     @DELETE
     @Produces("application/octet-stream")
     @Path("/{isbn}")
-    Response deleteIsbn(@PathParam("isbn") String isbn);
+    Response delete(@PathParam("isbn") String isbn);
 
     @GET
     @Produces("application/xml")
     @Path("/{isbn}")
-    BookState getIsbn(@PathParam("isbn") String isbn);
+    //BookState get(@PathParam("isbn") String isbn);
+    Response get(@PathParam("isbn") String isbn);
 
     @PUT
     @Consumes("application/xml")

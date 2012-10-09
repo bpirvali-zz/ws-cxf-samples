@@ -1,5 +1,6 @@
 package com.bp.bs;
 
+import javax.ws.rs.Consumes;
 import javax.ws.rs.DELETE;
 import javax.ws.rs.GET;
 import javax.ws.rs.POST;
@@ -26,12 +27,15 @@ import org.springframework.stereotype.Service;
 @Path("/books")
 public class BookResourceImpl implements BookResource {
 	private static final Logger logger = LoggerFactory.getLogger(BookResourceImpl.class);
-
-	@Path("/{isbn}")
+	
+	@Context private Request request;
+	@Context private UriInfo uriInfo;
+	
     @GET
+	@Path("/{isbn}")
     @Produces("application/xml")
     @ElementClass(response = BookState.class)
-	public Response get(@Context Request request, @PathParam("isbn")String isbn) {
+	public Response get(@PathParam("isbn")String isbn) {
     	BooksDB bdb = BooksDB.getInstance();
     	Book b = bdb.getBook(isbn);
     	if (b!=null) {
@@ -58,8 +62,11 @@ public class BookResourceImpl implements BookResource {
 		return Response.status(Status.NOT_FOUND).build();
     }
 
-	@Path("/{isbn}")
     @PUT
+	@Path("/{isbn}")
+    @Consumes("application/xml")
+    @Produces("application/octet-stream")
+    @ElementClass(request = BookState.class)
 	public Response update(@PathParam("isbn") String isbn, BookState st) {
     	BooksDB bdb = BooksDB.getInstance();
     	boolean b = bdb.updateBook(st.getIsbn(), st.getTitle());
@@ -69,8 +76,11 @@ public class BookResourceImpl implements BookResource {
     		return Response.status(Status.NOT_FOUND).build();
     }
 
-	@POST
-	public Response add(@Context Request request, @Context UriInfo uriInfo, BookState st) {
+    @POST
+    @Consumes("application/xml")
+    @Produces("application/octet-stream")
+    @ElementClass(request = BookState.class)
+	public Response add(BookState st) {
     	BooksDB bdb = BooksDB.getInstance();
     	bdb.addBook(new Book(st.getIsbn(), st.getTitle()));
 		UriBuilder uriBuilder = uriInfo.getBaseUriBuilder();
@@ -80,8 +90,9 @@ public class BookResourceImpl implements BookResource {
 		return builder.build();
 	}
 	
-	@Path("/{isbn}")
     @DELETE
+	@Path("/{isbn}")
+    @Produces("application/octet-stream")
 	public Response delete(@PathParam("isbn") String isbn) {
     	BooksDB bdb = BooksDB.getInstance();
     	boolean b = bdb.deleteBook(isbn);

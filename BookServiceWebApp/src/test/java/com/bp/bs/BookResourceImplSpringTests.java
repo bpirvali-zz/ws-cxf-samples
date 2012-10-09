@@ -53,6 +53,7 @@ public class BookResourceImplSpringTests extends AbstractTestNGSpringContextTest
 		BookState book = client.get(BookState.class);
 		Assert.assertEquals(book.getTitle(), sTitle);
 		logger.info("get PASSED!");
+		/*
 		if (cfg.isTestFailover()) {
 			try {
 				System.out.println("You have got 15 secs to shutdown the primary instance...");
@@ -62,6 +63,7 @@ public class BookResourceImplSpringTests extends AbstractTestNGSpringContextTest
 				e.printStackTrace();
 			}
 		}
+		*/
 	}
 
 	// -------------
